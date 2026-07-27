@@ -15,6 +15,10 @@ A production-ready, full-stack video broadcasting and social engagement platform
 * **Interactive Video Player:** Dedicated watch screen (`/watch/:videoId`) featuring dynamic view counters, subscriber tracking, like toggling, and nested discussion threads.
 * **Creator Studio Dashboard:** Dedicated management hub (`/dashboard`) for creators to track channel analytics (views, likes, subscribers), publish new video broadcasts, toggle visibility, and edit existing media.
 * **Playtube Community Tweets:** Twitter-style social community stream (`/tweets`) with nested reply drawers for interactive creator-fan discussions.
+<img width="500" alt="Screenshot 2026-07-27 at 23 28 50" src="https://github.com/user-attachments/assets/80624df2-543a-4fbe-b852-6551c304dc9e" />
+<img width="500" alt="Screenshot 2026-07-27 at 23 32 26" src="https://github.com/user-attachments/assets/076ce061-8860-419b-a6f8-380a3ef78fcf" />
+
+
 
 ### Backend (API Service)
 * **Secure Authentication & Authorization:** JWT-based stateless access and refresh token rotation with secure HTTP-only cookie support and bcrypt password hashing.
