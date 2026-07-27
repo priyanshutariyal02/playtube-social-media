@@ -2,24 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Phase 1: Design Token Foundation ─────────────────────────────────── */
+
 @layer base {
+  /* ── Dark Mode Tokens (default) ── */
+  :root {
+    --bg-primary:    10 12 20;      /* #0a0c14 — deepest page bg */
+    --bg-surface:    17 24 39;      /* #111827 — cards, panels    */
+    --bg-elevated:   28 35 51;      /* #1c2333 — hover states     */
+    --text-primary:  241 245 249;   /* #F1F5F9 — headings, body   */
+    --text-secondary:148 163 184;   /* #94A3B8 — muted labels     */
+    --border-subtle: 34 45 64;      /* #222d40 — dividers, rings  */
+  }
+
+  /* ── Light Mode Tokens ── */
+  .light {
+    --bg-primary:    245 246 250;   /* #F5F6FA */
+    --bg-surface:    255 255 255;   /* #FFFFFF */
+    --bg-elevated:   240 242 248;   /* #F0F2F8 */
+    --text-primary:  15 23 42;      /* #0F172A */
+    --text-secondary:100 116 139;   /* #64748B */
+    --border-subtle: 226 232 240;   /* #E2E8F0 */
+  }
+
+  /* ── Global Base ── */
+  html {
+    @apply scroll-smooth;
+  }
+
   body {
-    @apply bg-slateDark text-gray-100 font-sans antialiased selection:bg-cyan-500 selection:text-black min-h-screen;
+    @apply bg-bg-primary text-text-primary font-sans antialiased min-h-screen;
+  }
+
+  /* ── Brand text-selection highlight ── */
+  ::selection {
+    background-color: #4361EE44;
+  }
+
+  /* ── Global Accessibility Focus Ring ── */
+  /* Focus-visible with matching background ring-offset (no white border flash) */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-brand-mid ring-offset-2 ring-offset-bg-primary;
   }
 }
 
-/* Custom scrollbar styling */
+/* ─── Custom Scrollbar — brand tinted ────────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #0b0f19;
+  background: rgb(var(--bg-primary));
 }
 ::-webkit-scrollbar-thumb {
-  background: #1f293d;
+  background: #4361EE55;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #374151;
+  background: #4361EEaa;
+}
+
+/* ─── Utility: Brand Gradient Text ──────────────────────────────────────── */
+@layer utilities {
+  .text-brand-gradient {
+    background: linear-gradient(135deg, #4361EE 0%, #7B2FBE 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Shimmer skeleton animation */
+  .skeleton {
+    @apply bg-bg-elevated rounded-xl animate-pulse;
+  }
 }

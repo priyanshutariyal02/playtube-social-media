@@ -13,7 +13,7 @@ interface NavItem {
   popupMessage?: string;
 }
 
-export const Sidebar: React.FC = () => {
+export const BottomNav: React.FC = () => {
   const navItems: NavItem[] = [
     { name: "Feed", path: "/", icon: Home },
     { name: "Community", path: "/tweets", icon: MessageSquare },
@@ -28,7 +28,7 @@ export const Sidebar: React.FC = () => {
         "Sign in to see all your subscribed channels, track new uploads, and never miss a stream.",
     },
     {
-      name: "Creator Studio",
+      name: "Studio",
       path: "/dashboard",
       icon: LayoutDashboard,
       requiresAuth: true,
@@ -40,7 +40,7 @@ export const Sidebar: React.FC = () => {
   ];
 
   return (
-    <aside className="w-60 shrink-0 bg-bg-primary border-r border-border-subtle p-4 hidden md:flex flex-col gap-1 sticky top-[61px] h-[calc(100vh-61px)] z-40 transition-colors duration-200">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-bg-primary/95 backdrop-blur-md border-t border-border-subtle md:hidden px-2 py-1.5 flex items-center justify-around transition-colors duration-200">
       {navItems.map((item) => {
         const Icon = item.icon;
 
@@ -50,17 +50,17 @@ export const Sidebar: React.FC = () => {
             to={item.path}
             end={item.path === "/"}
             className={({ isActive }) =>
-              `flex w-full items-center gap-3 px-3.5 py-2.5 rounded-md font-medium text-sm border transition-colors duration-200 outline-none focus:outline-none ${
+              `flex flex-col items-center gap-1 py-1 px-3 rounded-md text-[11px] font-medium transition-colors duration-200 outline-none ${
                 isActive
-                  ? "bg-brand-gradient-soft text-brand-start border-brand-start/25 shadow-sm"
-                  : "border-transparent text-text-secondary hover:text-text-primary hover:bg-bg-elevated"
+                  ? "text-brand-start font-semibold"
+                  : "text-text-secondary hover:text-text-primary"
               }`
             }
           >
             {({ isActive }) => (
               <>
                 <Icon
-                  className={`w-4 h-4 transition-colors ${
+                  className={`w-5 h-5 transition-colors ${
                     isActive ? "text-brand-start" : ""
                   }`}
                 />
@@ -77,8 +77,8 @@ export const Sidebar: React.FC = () => {
               action={item.action || "default"}
               title={item.popupTitle}
               message={item.popupMessage}
-              position="right"
-              className="w-full block"
+              position="top"
+              className="inline-flex"
             >
               {linkElement}
             </AuthRequiredPopup>
@@ -87,6 +87,6 @@ export const Sidebar: React.FC = () => {
 
         return linkElement;
       })}
-    </aside>
+    </nav>
   );
 };

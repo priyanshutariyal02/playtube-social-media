@@ -81,32 +81,32 @@ export const AuthRequiredPopup: React.FC<AuthRequiredPopupProps> = ({
     switch (action) {
       case "subscribe":
         return {
-          icon: <UserPlus className="w-5 h-5 text-cyan-400" />,
+          icon: <UserPlus className="w-5 h-5 text-brand-start" />,
           title: title || "Want to subscribe to this channel?",
           message: message || "Sign in to subscribe to this channel.",
         };
       case "like":
         return {
-          icon: <ThumbsUp className="w-5 h-5 text-cyan-400" />,
+          icon: <ThumbsUp className="w-5 h-5 text-brand-start" />,
           title: title || "Like this post?",
           message: message || "Sign in to make your opinion count.",
         };
       case "comment":
       case "reply":
         return {
-          icon: <MessageSquare className="w-5 h-5 text-cyan-400" />,
+          icon: <MessageSquare className="w-5 h-5 text-brand-start" />,
           title: title || "Want to join the conversation?",
           message: message || "Sign in to continue",
         };
       case "tweet":
         return {
-          icon: <Sparkles className="w-5 h-5 text-cyan-400" />,
+          icon: <Sparkles className="w-5 h-5 text-brand-start" />,
           title: title || "Want to share an update?",
           message: message || "Sign in to continue",
         };
       default:
         return {
-          icon: <LogIn className="w-5 h-5 text-cyan-400" />,
+          icon: <LogIn className="w-5 h-5 text-brand-start" />,
           title: title || "Authentication Required",
           message:
             message ||
@@ -146,14 +146,17 @@ export const AuthRequiredPopup: React.FC<AuthRequiredPopupProps> = ({
       {/* Popover Card */}
       {isOpen && !isAuthenticated && (
         <div
-          className={`absolute ${getPositionClasses()} z-[100] w-72 sm:w-80 rounded-2xl bg-[#131a2a]/95 backdrop-blur-2xl border border-cyan-500/40 p-4.5 shadow-2xl shadow-black/90 animate-in fade-in-0 zoom-in-95 duration-200 py-2 px-4 flex flex-col gap-3 text-center`}
+          className={`absolute ${getPositionClasses()} z-[100] w-72 sm:w-80 rounded-md bg-bg-surface/95 backdrop-blur-2xl border border-brand-start/40 p-4 shadow-2xl shadow-black/90 animate-slide-up flex flex-col gap-3 text-center`}
         >
           {/* Title & Description */}
-          <div className="">
-            <h4 className="text-base font-bold text-white leading-snug">
-              {details.title}
-            </h4>
-            <p className="text-xs text-gray-300 mt-1.5 leading-relaxed">
+          <div>
+            <div className="flex items-center justify-center gap-2 mb-1">
+              {details.icon}
+              <h4 className="text-sm font-bold text-text-primary leading-snug">
+                {details.title}
+              </h4>
+            </div>
+            <p className="text-xs text-text-secondary leading-relaxed">
               {details.message}
             </p>
           </div>
@@ -165,7 +168,7 @@ export const AuthRequiredPopup: React.FC<AuthRequiredPopupProps> = ({
               setIsOpen(false);
               navigate("/auth");
             }}
-            className="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-black font-bold text-xs shadow-md shadow-cyan-500/20 flex items-center justify-center gap-1.5 transition-all transform active:scale-[0.98]"
+            className="w-full py-2 px-3 rounded-md bg-brand-gradient hover:brightness-110 text-white font-bold text-xs shadow-md shadow-brand-start/20 flex items-center justify-center gap-1.5 transition-all transform active:scale-[0.98]"
           >
             <span>Sign in</span>
           </button>
