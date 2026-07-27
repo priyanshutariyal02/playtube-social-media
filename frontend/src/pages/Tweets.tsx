@@ -54,7 +54,7 @@ const TweetRepliesSection: React.FC<{ tweetId: string }> = ({ tweetId }) => {
   };
 
   return (
-    <div className="mt-4 pt-4 border-t border-[#1f293d] pl-12 flex flex-col gap-4">
+    <div className="mt-4 pt-4 border-t border-border-subtle pl-6 sm:pl-12 flex flex-col gap-4">
       {/* Reply Input */}
       {isAuthenticated ? (
         <form onSubmit={handlePostReply} className="flex gap-2.5 items-center">
@@ -67,12 +67,13 @@ const TweetRepliesSection: React.FC<{ tweetId: string }> = ({ tweetId }) => {
             value={replyText}
             onChange={(e) => setReplyText(e.target.value)}
             placeholder="Post your reply..."
-            className="flex-1 bg-[#0b0f19] border border-[#1f293d] rounded-xl px-3.5 py-2 text-xs text-gray-100 placeholder-gray-500 focus:outline-none focus:border-cyan-500"
+            rows={1}
+            className="flex-1 bg-bg-primary border border-border-subtle rounded-md px-3.5 py-2 text-xs text-text-primary placeholder-text-secondary/50 focus:outline-none focus:border-brand-start/60 transition-colors resize-none"
           />
           <button
             type="submit"
             disabled={!replyText.trim() || addReplyMutation.isPending}
-            className="px-3.5 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs disabled:opacity-40 transition-all flex items-center gap-1 shrink-0"
+            className="px-3.5 py-2 rounded-md bg-brand-gradient text-white font-bold text-xs disabled:opacity-40 hover:brightness-110 transition-all flex items-center gap-1 shrink-0 shadow-sm"
           >
             {addReplyMutation.isPending ? (
               <Loader2 className="w-3 h-3 animate-spin" />
@@ -85,18 +86,18 @@ const TweetRepliesSection: React.FC<{ tweetId: string }> = ({ tweetId }) => {
       ) : (
         <AuthRequiredPopup action="reply" position="bottom" className="w-full">
           <div className="flex gap-2.5 items-center w-full cursor-pointer">
-            <div className="w-7 h-7 rounded-full bg-[#131a2a] border border-[#1f293d] flex items-center justify-center shrink-0 text-gray-500">
+            <div className="w-7 h-7 rounded-full bg-bg-elevated border border-border-subtle flex items-center justify-center shrink-0 text-text-secondary">
               <CornerDownRight className="w-3.5 h-3.5" />
             </div>
             <textarea
               readOnly
               rows={1}
               placeholder="Post your reply..."
-              className="flex-1 bg-[#0b0f19] border border-[#1f293d] rounded-xl px-3.5 py-2 text-xs text-gray-400 placeholder-gray-500 cursor-pointer focus:outline-none resize-none"
+              className="flex-1 bg-bg-primary border border-border-subtle rounded-md px-3.5 py-2 text-xs text-text-secondary placeholder-text-secondary/40 cursor-pointer focus:outline-none resize-none"
             />
             <button
               type="button"
-              className="px-3.5 py-2 rounded-xl bg-[#131a2a] border border-[#1f293d] text-gray-400 font-bold text-xs transition-all flex items-center gap-1 shrink-0 pointer-events-none"
+              className="px-3.5 py-2 rounded-md bg-bg-elevated border border-border-subtle text-text-secondary font-bold text-xs transition-all flex items-center gap-1 shrink-0 pointer-events-none"
             >
               <Send className="w-3 h-3" />
               <span>Reply</span>
@@ -108,16 +109,16 @@ const TweetRepliesSection: React.FC<{ tweetId: string }> = ({ tweetId }) => {
       {/* Replies List */}
       <div className="flex flex-col gap-3">
         {isLoading ? (
-          <div className="text-xs text-gray-500 py-2 animate-pulse">
+          <div className="text-xs text-text-secondary/60 py-2 animate-pulse">
             Loading replies...
           </div>
         ) : replies && replies.length > 0 ? (
           replies.map((reply) => (
             <div
               key={reply._id}
-              className="flex gap-2.5 p-3 rounded-xl bg-[#0b0f19]/60 border border-[#1f293d]/60 group"
+              className="flex gap-2.5 p-3 rounded-md bg-bg-primary/60 border border-border-subtle/60 group"
             >
-              <CornerDownRight className="w-3.5 h-3.5 text-gray-600 shrink-0 mt-0.5" />
+              <CornerDownRight className="w-3.5 h-3.5 text-text-secondary/50 shrink-0 mt-0.5" />
               <img
                 src={reply.owner?.avatar}
                 alt={reply.owner?.username}
@@ -125,14 +126,14 @@ const TweetRepliesSection: React.FC<{ tweetId: string }> = ({ tweetId }) => {
               />
               <div className="flex flex-col flex-1 min-w-0">
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-xs font-bold text-gray-200">
+                  <span className="text-xs font-bold text-text-primary">
                     @{reply.owner?.username}
                   </span>
-                  <span className="text-[10px] text-gray-500">
+                  <span className="text-[10px] text-text-secondary/60">
                     {new Date(reply.createdAt).toLocaleDateString()}
                   </span>
                 </div>
-                <p className="text-sm text-gray-200 leading-relaxed whitespace-pre-wrap pl-12">
+                <p className="text-xs text-text-primary/80 mt-1 leading-relaxed whitespace-pre-wrap">
                   {reply.content}
                 </p>
               </div>
@@ -140,7 +141,7 @@ const TweetRepliesSection: React.FC<{ tweetId: string }> = ({ tweetId }) => {
               {user?._id === reply.owner?._id && (
                 <button
                   onClick={() => deleteReplyMutation.mutate(reply._id)}
-                  className="text-gray-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all px-1"
+                  className="text-text-secondary/50 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all px-1"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>
@@ -148,7 +149,7 @@ const TweetRepliesSection: React.FC<{ tweetId: string }> = ({ tweetId }) => {
             </div>
           ))
         ) : (
-          <div className="text-xs text-gray-600 py-1 pl-6">
+          <div className="text-xs text-text-secondary/50 py-1 pl-6">
             No replies yet. Start the conversation!
           </div>
         )}
@@ -208,13 +209,13 @@ export const Tweets: React.FC = () => {
   return (
     <div className="max-w-3xl mx-auto flex flex-col gap-6 pb-12">
       {/* Header banner */}
-      <div className="p-6 rounded-3xl bg-gradient-to-r from-[#131a2a] to-[#172138] border border-[#1f293d] flex items-center justify-between">
+      <div className="p-6 rounded-md bg-bg-surface border border-border-subtle flex items-center justify-between shadow-sm">
         <div>
-          <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-            <MessageSquare className="w-6 h-6 text-cyan-400" />
+          <h1 className="text-2xl font-bold text-text-primary flex items-center gap-2">
+            <MessageSquare className="w-6 h-6 text-brand-start" />
             <span>Playtube Community Tweets</span>
           </h1>
-          <p className="text-sm text-gray-400 mt-1">
+          <p className="text-sm text-text-secondary mt-1">
             Share quick updates, announcements, and thoughts with the community.
           </p>
         </div>
@@ -224,7 +225,7 @@ export const Tweets: React.FC = () => {
       {isAuthenticated ? (
         <form
           onSubmit={handleCreateTweet}
-          className="p-5 rounded-3xl bg-[#131a2a] border border-[#1f293d] flex flex-col gap-3 shadow-lg"
+          className="p-5 rounded-md bg-bg-surface border border-border-subtle flex flex-col gap-3 shadow-md"
         >
           <div className="flex gap-3">
             <img
@@ -237,17 +238,17 @@ export const Tweets: React.FC = () => {
               value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder="What's happening in your stream today?"
-              className="w-full bg-[#0b0f19] border border-[#1f293d] rounded-2xl p-3.5 text-sm text-gray-100 placeholder-gray-500 focus:outline-none focus:border-cyan-500 resize-none"
+              className="w-full bg-bg-primary border border-border-subtle rounded-md p-3.5 text-sm text-text-primary placeholder-text-secondary/50 focus:outline-none focus:border-brand-start/60 resize-none transition-colors"
             />
           </div>
-          <div className="flex items-center justify-between pt-2 border-t border-[#1f293d]">
-            <span className="text-xs text-gray-500">
+          <div className="flex items-center justify-between pt-2 border-t border-border-subtle">
+            <span className="text-xs text-text-secondary/70">
               {content.length}/280 characters
             </span>
             <button
               type="submit"
               disabled={!content.trim() || createTweetMutation.isPending}
-              className="px-5 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold text-xs shadow-md hover:brightness-110 disabled:opacity-40 transition-all flex items-center gap-1.5"
+              className="px-5 py-2 rounded-md bg-brand-gradient text-white font-bold text-xs shadow-md shadow-brand-start/20 hover:brightness-110 disabled:opacity-40 transition-all flex items-center gap-1.5"
             >
               <Send className="w-3.5 h-3.5" />
               <span>Post Tweet</span>
@@ -256,23 +257,23 @@ export const Tweets: React.FC = () => {
         </form>
       ) : (
         <AuthRequiredPopup action="tweet" position="bottom" className="w-full">
-          <div className="p-5 rounded-3xl bg-[#131a2a] border border-[#1f293d] flex flex-col gap-3 shadow-lg w-full cursor-pointer">
+          <div className="p-5 rounded-md bg-bg-surface border border-border-subtle flex flex-col gap-3 shadow-md w-full cursor-pointer">
             <div className="flex gap-3 w-full">
-              <div className="w-10 h-10 rounded-full bg-[#0b0f19] border border-[#1f293d] flex items-center justify-center shrink-0 text-gray-500">
+              <div className="w-10 h-10 rounded-full bg-bg-elevated border border-border-subtle flex items-center justify-center shrink-0 text-text-secondary">
                 <MessageSquare className="w-5 h-5" />
               </div>
               <textarea
                 readOnly
                 rows={2}
                 placeholder="What's happening in your stream today?"
-                className="w-full bg-[#0b0f19] border border-[#1f293d] rounded-2xl p-3.5 text-sm text-gray-400 placeholder-gray-500 cursor-pointer focus:outline-none resize-none"
+                className="w-full bg-bg-primary border border-border-subtle rounded-md p-3.5 text-sm text-text-secondary placeholder-text-secondary/40 cursor-pointer focus:outline-none resize-none"
               />
             </div>
-            <div className="flex items-center justify-between pt-2 border-t border-[#1f293d]">
-              <span className="text-xs text-gray-500">0/280 characters</span>
+            <div className="flex items-center justify-between pt-2 border-t border-border-subtle">
+              <span className="text-xs text-text-secondary/70">0/280 characters</span>
               <button
                 type="button"
-                className="px-5 py-2 rounded-xl bg-[#1f293d] text-gray-400 font-bold text-xs transition-all flex items-center gap-1.5 pointer-events-none"
+                className="px-5 py-2 rounded-md bg-bg-elevated text-text-secondary font-bold text-xs transition-all flex items-center gap-1.5 pointer-events-none"
               >
                 <Send className="w-3.5 h-3.5" />
                 <span>Post Tweet</span>
@@ -289,7 +290,7 @@ export const Tweets: React.FC = () => {
             {[1, 2, 3].map((i) => (
               <div
                 key={i}
-                className="h-28 rounded-2xl bg-[#131a2a] border border-[#1f293d]"
+                className="h-28 rounded-md skeleton"
               />
             ))}
           </div>
@@ -297,7 +298,7 @@ export const Tweets: React.FC = () => {
           tweets.map((tweet) => (
             <div
               key={tweet._id}
-              className="p-5 rounded-2xl bg-[#131a2a] border border-[#1f293d] flex flex-col gap-3 group hover:border-cyan-500/30 transition-colors"
+              className="p-5 rounded-md bg-bg-surface border border-border-subtle flex flex-col gap-3 group hover:border-brand-start/40 transition-colors shadow-sm"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -311,12 +312,12 @@ export const Tweets: React.FC = () => {
                     className="w-9 h-9 rounded-full object-cover"
                   />
                   <div>
-                    <h4 className="text-sm font-bold text-white">
+                    <h4 className="text-sm font-bold text-text-primary">
                       {tweet.owner?.fullName ||
                         user?.fullName ||
                         `@${tweet.owner?.username || user?.username}`}
                     </h4>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-text-secondary/70">
                       {new Date(tweet.createdAt).toLocaleDateString()}
                     </span>
                   </div>
@@ -325,14 +326,14 @@ export const Tweets: React.FC = () => {
                 {user?._id === (tweet.owner?._id || user?._id) && (
                   <button
                     onClick={() => deleteTweetMutation.mutate(tweet._id)}
-                    className="p-2 text-gray-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"
+                    className="p-2 text-text-secondary/50 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 )}
               </div>
 
-              <p className="text-sm text-gray-200 leading-relaxed whitespace-pre-wrap pl-12">
+              <p className="text-sm text-text-primary/90 leading-relaxed whitespace-pre-wrap pl-12">
                 {tweet.content}
               </p>
 
@@ -344,12 +345,12 @@ export const Tweets: React.FC = () => {
                     }
                     className={`flex items-center gap-1.5 text-xs transition-colors ${
                       tweet.isLiked
-                        ? "text-cyan-400 font-semibold"
-                        : "text-gray-400 hover:text-cyan-400"
+                        ? "text-brand-start font-semibold"
+                        : "text-text-secondary hover:text-brand-start"
                     }`}
                   >
                     <ThumbsUp
-                      className={`w-3.5 h-3.5 ${tweet.isLiked ? "fill-cyan-400" : ""}`}
+                      className={`w-3.5 h-3.5 ${tweet.isLiked ? "fill-brand-start" : ""}`}
                     />
                     <span>{tweet.likesCount || 0}</span>
                   </button>
@@ -361,8 +362,8 @@ export const Tweets: React.FC = () => {
                   }
                   className={`flex items-center gap-1.5 text-xs transition-colors ${
                     openTweetId === tweet._id
-                      ? "text-cyan-400 font-semibold"
-                      : "text-gray-400 hover:text-cyan-400"
+                      ? "text-brand-start font-semibold"
+                      : "text-text-secondary hover:text-brand-start"
                   }`}
                 >
                   <MessageSquare className="w-3.5 h-3.5" />
@@ -377,7 +378,7 @@ export const Tweets: React.FC = () => {
             </div>
           ))
         ) : (
-          <div className="p-12 text-center text-sm text-gray-500 bg-[#131a2a]/50 rounded-3xl border border-[#1f293d]">
+          <div className="p-12 text-center text-sm text-text-secondary/60 bg-bg-surface/50 rounded-md border border-border-subtle">
             No tweets posted yet. Share your first update above!
           </div>
         )}

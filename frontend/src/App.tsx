@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import { Sidebar } from "./components/Sidebar";
+import { BottomNav } from "./components/BottomNav";
 import { Home } from "./pages/Home";
 import { Auth } from "./pages/Auth";
 import { WatchVideo } from "./pages/WatchVideo";
@@ -12,11 +13,11 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 
 export const App: React.FC = () => {
   return (
-    <div className="min-h-screen bg-[#0b0f19] text-gray-100 flex flex-col font-sans">
+    <div className="min-h-screen bg-bg-primary text-text-primary flex flex-col font-sans transition-colors duration-200">
       <Navbar />
-      <div className="flex flex-1 max-w-7xl w-full mx-auto">
+      <div className="flex flex-1 w-full mx-auto">
         <Sidebar />
-        <main className="flex-1 p-4 lg:p-8 min-w-0">
+        <main className="flex-1 p-4 lg:p-8 min-w-0 pb-20 md:pb-8">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/auth" element={<Auth />} />
@@ -35,6 +36,7 @@ export const App: React.FC = () => {
           </Routes>
         </main>
       </div>
+      <BottomNav />
     </div>
   );
 };

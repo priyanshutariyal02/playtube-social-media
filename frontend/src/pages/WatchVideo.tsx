@@ -62,7 +62,7 @@ const VideoCommentRepliesSection: React.FC<{ commentId: string; videoId: string 
   };
 
   return (
-    <div className="mt-3 pt-3 border-t border-[#1f293d] pl-8 flex flex-col gap-3">
+    <div className="mt-3 pt-3 border-t border-border-subtle pl-8 flex flex-col gap-3">
       {/* Reply Input */}
       {isAuthenticated ? (
         <form onSubmit={handlePostReply} className="flex gap-2 items-center">
@@ -76,12 +76,12 @@ const VideoCommentRepliesSection: React.FC<{ commentId: string; videoId: string 
             value={replyText}
             onChange={(e) => setReplyText(e.target.value)}
             placeholder="Add a reply..."
-            className="flex-1 bg-[#0b0f19] border border-[#1f293d] rounded-xl px-3 py-1.5 text-xs text-gray-100 placeholder-gray-500 focus:outline-none focus:border-cyan-500"
+            className="flex-1 bg-bg-primary border border-border-subtle rounded-xl px-3 py-1.5 text-xs text-text-primary placeholder-text-secondary/40 focus:outline-none focus:border-brand-start/60 transition-colors"
           />
           <button
             type="submit"
             disabled={!replyText.trim() || addReplyMutation.isPending}
-            className="px-3 py-1.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs disabled:opacity-40 transition-all flex items-center gap-1 shrink-0"
+            className="px-3 py-1.5 rounded-xl bg-brand-gradient text-white font-bold text-xs disabled:opacity-40 transition-all flex items-center gap-1 shrink-0 hover:brightness-110"
           >
             {addReplyMutation.isPending ? (
               <Loader2 className="w-3 h-3 animate-spin" />
@@ -94,18 +94,18 @@ const VideoCommentRepliesSection: React.FC<{ commentId: string; videoId: string 
       ) : (
         <AuthRequiredPopup action="reply" position="bottom" className="w-full">
           <div className="flex gap-2 items-center w-full cursor-pointer">
-            <div className="w-6 h-6 rounded-full bg-[#131a2a] border border-[#1f293d] flex items-center justify-center shrink-0 text-gray-500">
+            <div className="w-6 h-6 rounded-full bg-bg-surface border border-border-subtle flex items-center justify-center shrink-0 text-text-secondary">
               <CornerDownRight className="w-3 h-3" />
             </div>
             <input
               type="text"
               readOnly
               placeholder="Add a reply..."
-              className="flex-1 bg-[#0b0f19] border border-[#1f293d] rounded-xl px-3 py-1.5 text-xs text-gray-400 placeholder-gray-500 cursor-pointer focus:outline-none"
+              className="flex-1 bg-bg-primary border border-border-subtle rounded-xl px-3 py-1.5 text-xs text-text-secondary placeholder-text-secondary/40 cursor-pointer focus:outline-none"
             />
             <button
               type="button"
-              className="px-3 py-1.5 rounded-xl bg-[#131a2a] border border-[#1f293d] text-gray-400 font-bold text-xs transition-all flex items-center gap-1 shrink-0 pointer-events-none"
+              className="px-3 py-1.5 rounded-xl bg-bg-surface border border-border-subtle text-text-secondary font-bold text-xs transition-all flex items-center gap-1 shrink-0 pointer-events-none"
             >
               <Send className="w-3 h-3" />
               <span>Reply</span>
@@ -117,14 +117,14 @@ const VideoCommentRepliesSection: React.FC<{ commentId: string; videoId: string 
       {/* Replies List */}
       <div className="flex flex-col gap-2.5">
         {isLoading ? (
-          <div className="text-[11px] text-gray-500 py-1 animate-pulse">Loading replies...</div>
+          <div className="text-[11px] text-text-secondary/60 py-1 animate-pulse">Loading replies...</div>
         ) : replies && replies.length > 0 ? (
           replies.map((reply) => (
             <div
               key={reply._id}
-              className="flex gap-2.5 p-2.5 rounded-xl bg-[#0b0f19]/60 border border-[#1f293d]/60 group"
+              className="flex gap-2.5 p-2.5 rounded-xl bg-bg-primary/60 border border-border-subtle/60 group"
             >
-              <CornerDownRight className="w-3.5 h-3.5 text-gray-600 shrink-0 mt-0.5" />
+              <CornerDownRight className="w-3.5 h-3.5 text-text-secondary/50 shrink-0 mt-0.5" />
               <img
                 src={reply.owner?.avatar || user?.avatar}
                 alt={reply.owner?.username || user?.username}
@@ -132,14 +132,14 @@ const VideoCommentRepliesSection: React.FC<{ commentId: string; videoId: string 
               />
               <div className="flex flex-col flex-1 min-w-0">
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-xs font-bold text-gray-200">
+                  <span className="text-xs font-bold text-text-primary">
                     @{reply.owner?.username || user?.username}
                   </span>
-                  <span className="text-[10px] text-gray-500">
+                  <span className="text-[10px] text-text-secondary/60">
                     {new Date(reply.createdAt).toLocaleDateString()}
                   </span>
                 </div>
-                <p className="text-xs text-gray-300 mt-1 leading-normal break-words">
+                <p className="text-xs text-text-primary/80 mt-1 leading-normal break-words">
                   {reply.content}
                 </p>
               </div>
@@ -147,7 +147,7 @@ const VideoCommentRepliesSection: React.FC<{ commentId: string; videoId: string 
               {user?._id === (reply.owner?._id || user?._id) && (
                 <button
                   onClick={() => deleteReplyMutation.mutate(reply._id)}
-                  className="text-gray-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all px-1"
+                  className="text-text-secondary/50 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all px-1"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>
@@ -155,7 +155,7 @@ const VideoCommentRepliesSection: React.FC<{ commentId: string; videoId: string 
             </div>
           ))
         ) : (
-          <div className="text-[11px] text-gray-600 py-1 pl-6">No replies yet.</div>
+          <div className="text-[11px] text-text-secondary/50 py-1 pl-6">No replies yet.</div>
         )}
       </div>
     </div>
@@ -233,16 +233,16 @@ export const WatchVideo: React.FC = () => {
   if (isVideoLoading) {
     return (
       <div className="flex flex-col gap-6 animate-pulse max-w-5xl mx-auto">
-        <div className="aspect-video bg-[#131a2a] rounded-3xl" />
-        <div className="h-8 bg-[#131a2a] rounded w-2/3" />
-        <div className="h-24 bg-[#131a2a] rounded w-full" />
+        <div className="aspect-video skeleton rounded-3xl" />
+        <div className="h-8 skeleton rounded w-2/3" />
+        <div className="h-24 skeleton rounded w-full" />
       </div>
     );
   }
 
   if (!video) {
     return (
-      <div className="text-center py-16 text-gray-400">
+      <div className="text-center py-16 text-text-secondary">
         Video not found or unavailable.
       </div>
     );
@@ -257,7 +257,7 @@ export const WatchVideo: React.FC = () => {
   return (
     <div className="max-w-5xl mx-auto flex flex-col gap-6 pb-12">
       {/* Video Player */}
-      <div className="relative aspect-video rounded-3xl overflow-hidden bg-black shadow-2xl border border-[#1f293d]">
+      <div className="relative aspect-video rounded-3xl overflow-hidden bg-black shadow-2xl border border-border-subtle">
         <video
           src={video.videoFile}
           poster={video.thumbnail}
@@ -269,23 +269,23 @@ export const WatchVideo: React.FC = () => {
 
       {/* Video Details Header */}
       <div className="flex flex-col gap-4">
-        <h1 className="text-2xl font-bold text-white leading-snug">
+        <h1 className="text-2xl font-bold text-text-primary leading-snug">
           {video.title}
         </h1>
 
-        <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[#1f293d]">
+        <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-border-subtle">
           {/* Creator Profile */}
           <div className="flex items-center gap-4">
             <img
               src={video.owner?.avatar || user?.avatar}
               alt={video.owner?.username}
-              className="w-12 h-12 rounded-full object-cover ring-2 ring-[#1f293d]"
+              className="w-12 h-12 rounded-full object-cover ring-2 ring-border-subtle"
             />
             <div>
-              <h3 className="text-base font-bold text-white">
+              <h3 className="text-base font-bold text-text-primary">
                 {video.owner?.fullName || user?.fullName || `@${video.owner?.username || user?.username}`}
               </h3>
-              <p className="text-xs text-gray-400">
+              <p className="text-xs text-text-secondary">
                 {video.owner?.subscribersCount || 0} Subscribers
               </p>
             </div>
@@ -298,10 +298,10 @@ export const WatchVideo: React.FC = () => {
                     isAuthenticated && subscribeMutation.mutate(video.owner._id)
                   }
                   disabled={subscribeMutation.isPending}
-                  className={`ml-2 px-5 py-2 rounded-full font-bold text-xs transition-all flex items-center gap-1.5 shadow-md ${
+                  className={`ml-2 px-5 py-2 rounded-full font-bold text-xs transition-all duration-200 flex items-center gap-1.5 shadow-md ${
                     video.owner?.isSubscribed
-                      ? "bg-[#1f293d] text-gray-200 hover:bg-[#28354f]"
-                      : "bg-cyan-500 text-black hover:bg-cyan-400"
+                      ? "bg-bg-elevated text-text-secondary hover:bg-bg-elevated/80 border border-border-subtle"
+                      : "bg-brand-gradient text-white shadow-brand-start/25 hover:brightness-110"
                   }`}
                 >
                   {video.owner?.isSubscribed ? (
@@ -326,27 +326,27 @@ export const WatchVideo: React.FC = () => {
               <button
                 onClick={() => isAuthenticated && likeMutation.mutate()}
                 disabled={likeMutation.isPending}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-xs transition-all border ${
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-xs transition-all duration-200 border ${
                   video.isLiked
-                    ? "bg-cyan-500/20 border-cyan-500 text-cyan-400"
-                    : "bg-[#131a2a] border-[#1f293d] text-gray-300 hover:border-gray-500"
+                    ? "bg-brand-start/20 border-brand-start text-brand-start"
+                    : "bg-bg-surface border-border-subtle text-text-secondary hover:border-brand-start/50"
                 }`}
               >
                 <ThumbsUp
-                  className={`w-4 h-4 ${video.isLiked ? "fill-cyan-400" : ""}`}
+                  className={`w-4 h-4 ${video.isLiked ? "fill-brand-start" : ""}`}
                 />
                 <span>{video.likesCount || 0} Likes</span>
               </button>
             </AuthRequiredPopup>
 
-            <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-[#131a2a] border border-[#1f293d] text-xs text-gray-400">
+            <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-bg-surface border border-border-subtle text-xs text-text-secondary">
               <span className="flex items-center gap-1.5">
-                <Eye className="w-4 h-4 text-cyan-400" />
+                <Eye className="w-4 h-4 text-brand-start" />
                 {video.views || 0} Views
               </span>
               <span>•</span>
               <span className="flex items-center gap-1.5">
-                <Calendar className="w-3.5 h-3.5 text-gray-500" />
+                <Calendar className="w-3.5 h-3.5 text-text-secondary/60" />
                 {new Date(video.createdAt).toLocaleDateString()}
               </span>
             </div>
@@ -354,15 +354,15 @@ export const WatchVideo: React.FC = () => {
         </div>
 
         {/* Description Box */}
-        <div className="p-4 rounded-2xl bg-[#131a2a] border border-[#1f293d] text-sm text-gray-300 whitespace-pre-wrap leading-relaxed mt-2">
+        <div className="p-4 rounded-2xl bg-bg-surface border border-border-subtle text-sm text-text-primary/80 whitespace-pre-wrap leading-relaxed mt-2">
           {video.description || "No description provided."}
         </div>
       </div>
 
       {/* Comments Section */}
       <div className="flex flex-col gap-6 mt-2">
-        <h3 className="text-lg font-bold text-white flex items-center gap-2">
-          <MessageSquare className="w-5 h-5 text-cyan-400" />
+        <h3 className="text-lg font-bold text-text-primary flex items-center gap-2">
+          <MessageSquare className="w-5 h-5 text-brand-start" />
           <span>Comments ({comments?.length || 0})</span>
         </h3>
 
@@ -380,12 +380,12 @@ export const WatchVideo: React.FC = () => {
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
                 placeholder="Add a public comment..."
-                className="w-full bg-[#131a2a] border border-[#1f293d] rounded-2xl pl-4 pr-12 py-3 text-sm text-gray-100 placeholder-gray-500 focus:outline-none focus:border-cyan-500"
+                className="w-full bg-bg-surface border border-border-subtle rounded-2xl pl-4 pr-12 py-3 text-sm text-text-primary placeholder-text-secondary/40 focus:outline-none focus:border-brand-start/50 focus:ring-1 focus:ring-brand-start/30 transition-all"
               />
               <button
                 type="submit"
                 disabled={!commentText.trim() || addCommentMutation.isPending}
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-xl bg-cyan-500 text-black hover:brightness-110 disabled:opacity-30 transition-all"
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-xl bg-brand-gradient text-white hover:brightness-110 disabled:opacity-30 transition-all"
               >
                 <Send className="w-4 h-4" />
               </button>
@@ -394,7 +394,7 @@ export const WatchVideo: React.FC = () => {
         ) : (
           <AuthRequiredPopup action="comment" position="bottom" className="w-full">
             <div className="flex gap-3 w-full cursor-pointer">
-              <div className="w-10 h-10 rounded-full bg-[#131a2a] border border-[#1f293d] flex items-center justify-center shrink-0 text-gray-500">
+              <div className="w-10 h-10 rounded-full bg-bg-surface border border-border-subtle flex items-center justify-center shrink-0 text-text-secondary">
                 <MessageSquare className="w-5 h-5" />
               </div>
               <div className="flex-1 relative">
@@ -402,11 +402,11 @@ export const WatchVideo: React.FC = () => {
                   type="text"
                   readOnly
                   placeholder="Add a public comment..."
-                  className="w-full bg-[#131a2a] border border-[#1f293d] rounded-2xl pl-4 pr-12 py-3 text-sm text-gray-400 placeholder-gray-500 cursor-pointer focus:outline-none"
+                  className="w-full bg-bg-surface border border-border-subtle rounded-2xl pl-4 pr-12 py-3 text-sm text-text-secondary placeholder-text-secondary/40 cursor-pointer focus:outline-none"
                 />
                 <button
                   type="button"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-xl bg-[#1f293d] text-gray-400 transition-all pointer-events-none"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-xl bg-bg-elevated text-text-secondary transition-all pointer-events-none"
                 >
                   <Send className="w-4 h-4" />
                 </button>
@@ -418,12 +418,12 @@ export const WatchVideo: React.FC = () => {
         {/* Comments Feed */}
         <div className="flex flex-col gap-4 mt-2">
           {isCommentsLoading ? (
-            <div className="text-sm text-gray-500 py-4 animate-pulse">Loading comments...</div>
+            <div className="text-sm text-text-secondary/60 py-4 animate-pulse">Loading comments...</div>
           ) : comments && comments.length > 0 ? (
             comments.map((comment) => (
               <div
                 key={comment._id}
-                className="flex flex-col p-4 rounded-2xl bg-[#131a2a]/60 border border-[#1f293d] group"
+                className="flex flex-col p-4 rounded-2xl bg-bg-surface/60 border border-border-subtle group"
               >
                 <div className="flex gap-3">
                   <img
@@ -433,14 +433,14 @@ export const WatchVideo: React.FC = () => {
                   />
                   <div className="flex flex-col flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="text-xs font-bold text-gray-200">
+                      <span className="text-xs font-bold text-text-primary">
                         @{comment.owner?.username || user?.username}
                       </span>
-                      <span className="text-[11px] text-gray-500">
+                      <span className="text-[11px] text-text-secondary/60">
                         {new Date(comment.createdAt).toLocaleDateString()}
                       </span>
                     </div>
-                    <p className="text-sm text-gray-300 mt-1 leading-normal break-words">
+                    <p className="text-sm text-text-primary/80 mt-1 leading-normal break-words">
                       {comment.content}
                     </p>
 
@@ -451,10 +451,10 @@ export const WatchVideo: React.FC = () => {
                             openReplyCommentId === comment._id ? null : comment._id
                           )
                         }
-                        className={`flex items-center gap-1.5 text-xs transition-colors ${
+                        className={`flex items-center gap-1.5 text-xs transition-colors duration-200 ${
                           openReplyCommentId === comment._id
-                            ? "text-cyan-400 font-semibold"
-                            : "text-gray-400 hover:text-cyan-400"
+                            ? "text-brand-start font-semibold"
+                            : "text-text-secondary hover:text-brand-start"
                         }`}
                       >
                         <MessageSquare className="w-3.5 h-3.5" />
@@ -467,7 +467,7 @@ export const WatchVideo: React.FC = () => {
                     <button
                       onClick={() => deleteCommentMutation.mutate(comment._id)}
                       title="Delete Comment"
-                      className="opacity-0 group-hover:opacity-100 p-2 text-gray-500 hover:text-red-400 transition-all shrink-0 self-start"
+                      className="opacity-0 group-hover:opacity-100 p-2 text-text-secondary/50 hover:text-red-400 transition-all shrink-0 self-start"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -484,7 +484,7 @@ export const WatchVideo: React.FC = () => {
               </div>
             ))
           ) : (
-            <div className="text-center py-8 text-sm text-gray-500">
+            <div className="text-center py-8 text-sm text-text-secondary/60">
               No comments yet. Start the discussion!
             </div>
           )}
