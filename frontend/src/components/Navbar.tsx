@@ -8,7 +8,6 @@ import {
   Search,
   LogOut,
   Video,
-  LogIn,
   X,
   Loader2,
   Sun,
@@ -296,7 +295,7 @@ export const Navbar: React.FC = () => {
                   to="/auth"
                   className="flex items-center gap-1.5 px-4 py-2 rounded-md bg-brand-gradient text-white font-semibold text-sm shadow-md shadow-brand-start/25 hover:brightness-110 active:scale-95 transition-all duration-200 outline-none"
                 >
-                  <LogIn className="w-4 h-4" />
+                  {/* <LogIn className="w-4 h-4" /> */}
                   <span>Sign In</span>
                 </Link>
               )}

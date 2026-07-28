@@ -146,12 +146,12 @@ export const AuthRequiredPopup: React.FC<AuthRequiredPopupProps> = ({
       {/* Popover Card */}
       {isOpen && !isAuthenticated && (
         <div
-          className={`absolute ${getPositionClasses()} z-[100] w-72 sm:w-80 rounded-md bg-bg-surface/95 backdrop-blur-2xl border border-brand-start/40 p-4 shadow-2xl shadow-black/90 animate-slide-up flex flex-col gap-3 text-center`}
+          className={`absolute ${getPositionClasses()} z-[100] w-72 max-w-[calc(100vw-2rem)] sm:w-80 rounded-md bg-bg-surface/95 backdrop-blur-2xl border border-brand-start/40 p-4 shadow-2xl shadow-black/90 animate-slide-up flex flex-col gap-3 text-center`}
         >
           {/* Title & Description */}
           <div>
             <div className="flex items-center justify-center gap-2 mb-1">
-              {details.icon}
+              {/* {details.icon} */}
               <h4 className="text-sm font-bold text-text-primary leading-snug">
                 {details.title}
               </h4>

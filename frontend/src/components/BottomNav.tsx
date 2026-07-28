@@ -77,7 +77,7 @@ export const BottomNav: React.FC = () => {
               action={item.action || "default"}
               title={item.popupTitle}
               message={item.popupMessage}
-              position="top"
+              position="top-right"
               className="inline-flex"
             >
               {linkElement}
